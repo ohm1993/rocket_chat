@@ -75,7 +75,6 @@ Template.loginServices.events({
 		const serviceIcon = $(e.currentTarget).find('.service-icon');
 		loadingIcon.removeClass('hidden');
 		serviceIcon.addClass('hidden');
-
 		const loginWithService = `loginWith${ longinMethods[this.service.service] || s.capitalize(this.service.service) }`;
 		const serviceConfig = this.service.clientConfig || {};
 		return Meteor[loginWithService](serviceConfig, function(error) {

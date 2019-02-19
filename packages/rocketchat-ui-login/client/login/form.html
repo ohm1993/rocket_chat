@@ -26,17 +26,17 @@
 				{{#if showFormLogin}}
 					<div class="fields">
 						{{#if state 'login'}}
-							<div class="rc-input">
-								<label class="rc-input__label" for="emailOrUsername">
-									<div class="rc-input__wrapper">
-										<input name="emailOrUsername" id="emailOrUsername" type="text" class="rc-input__element"
-											autocapitalize="off" autocorrect="off"
-											placeholder="{{emailOrUsernamePlaceholder}}" autofocus>
-										<div class="input-error"></div>
-									</div>
-								</label>
-							</div>
-							<div class="rc-input">
+						<div class="rc-input">
+							<label class="rc-input__label" for="mobilenumber">
+								<div class="rc-input__wrapper">
+									<input name="mobilenumber" id="mobilenumber" type="text" class="rc-input__element"
+										autocapitalize="off" autocorrect="off"
+										placeholder="Enter Mobile Number" autofocus>
+									<div class="input-error"></div>
+								</div>
+							</label>
+						</div>
+							<!-- <div class="rc-input">
 								<label class="rc-input__label" for="pass">
 									<div class="rc-input__wrapper">
 										<input name="pass" id="pass" type="password" class="rc-input__element"
@@ -45,7 +45,7 @@
 										<div class="input-error"></div>
 									</div>
 								</label>
-							</div>
+							</div> -->
 						{{/if}}
 						{{#if state 'register'}}
 						<div class="rc-input">

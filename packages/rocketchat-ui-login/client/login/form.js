@@ -79,8 +79,10 @@ Template.loginForm.events({
 		event.preventDefault();
 		$(event.target).find('button.login').focus();
 		instance.loading.set(true);
+
 		const formData = instance.validate();
 		const state = instance.state.get();
+
 		if (formData) {
 			if (state === 'email-verification') {
 				Meteor.call('sendConfirmationEmail', s.trim(formData.email), () => {
@@ -128,15 +130,17 @@ Template.loginForm.events({
 						}
 					});
 				});
-			} else {
-				let loginMethod = 'loginWithPassword';
+			}
+			else {
+				let loginMethod = 'loginWithMobileNumber';
+				//let loginMethod = 'loginWithPassword';
 				if (settings.get('LDAP_Enable')) {
 					loginMethod = 'loginWithLDAP';
 				}
 				if (settings.get('CROWD_Enable')) {
 					loginMethod = 'loginWithCrowd';
 				}
-				return Meteor[loginMethod](s.trim(formData.emailOrUsername), formData.pass, function(error) {
+				return Meteor[loginMethod](s.trim(formData.mobilenumber), function(error) {
 					instance.loading.set(false);
 					if (error != null) {
 						if (error.error === 'no-valid-email') {
@@ -150,6 +154,20 @@ Template.loginForm.events({
 					}
 					Session.set('forceLogin', false);
 				});
+				// return Meteor[loginMethod](s.trim(formData.emailOrUsername), formData.pass, function(error) {
+				// 	instance.loading.set(false);
+				// 	if (error != null) {
+				// 		if (error.error === 'no-valid-email') {
+				// 			instance.state.set('email-verification');
+				// 		} else if (error.error === 'error-user-is-not-activated') {
+				// 			toastr.error(t('Wait_activation_warning'));
+				// 		} else {
+				// 			toastr.error(t('User_not_found_or_incorrect_password'));
+				// 		}
+				// 		return;
+				// 	}
+				// 	Session.set('forceLogin', false);
+				// });
 			}
 		}
 	},
@@ -230,11 +248,14 @@ Template.loginForm.onCreated(function() {
 			}
 		}
 		if (state === 'login') {
-			if (!formObj.emailOrUsername) {
-				validationObj.emailOrUsername = t('Invalid_email');
+			if(formObj.mobilenumber.length != 10){
+				validationObj.mobilenumber = t('Invalid_Mobilenumber');
 			}
+			// if (!formObj.emailOrUsername) {
+			//  validationObj.emailOrUsername = t('Invalid_email');
+			// }
 		}
-		if (state !== 'forgot-password') {
+		if (state === 'forgot-password') {
 			if (!formObj.pass) {
 				validationObj.pass = t('Invalid_pass');
 			}
