@@ -105,7 +105,7 @@ Meteor.loginWithMobileNumber = function(mobile_number,cb) {
 					if (code === false) {
 						return cb();
 					}else{
-						loginWithPassword('gudduraj2393', 'gudduraj2393@', (error) => {
+						loginWithPassword('username', 'password', (error) => {
 								if (!error || error.error !== 'totp-required') {
 									return cb(error);
 								}
